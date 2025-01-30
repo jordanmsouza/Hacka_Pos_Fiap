@@ -24,7 +24,7 @@ VisionGuard é um sistema de visão computacional baseado em YOLO que detecta ob
 Antes de executar o projeto, certifique-se de ter instalado os seguintes pacotes:
 
 ```bash
-pip install opencv-python sendgrid ultralytics tkinter
+pip install opencv-python ultralytics tkinter
 ```
 
 ## Como Usar
@@ -36,7 +36,7 @@ pip install opencv-python sendgrid ultralytics tkinter
    python visionguard.py
    ```
 2. Clique no botão "Câmera" para iniciar a detecção ao vivo.
-3. Pressione `q` ou `Esc` para encerrar.
+3. Pressione `fechar` para encerrar.
 
 ### Modo Vídeo
 
@@ -47,7 +47,7 @@ pip install opencv-python sendgrid ultralytics tkinter
 ## Estrutura do Código
 
 - `detect_objects(video_source)`: Realiza a detecção de objetos em tempo real.
-- `send_email(image_path)`: Envia um e-mail com a imagem capturada pelo SendGrid.
+- `send_email(image_path)`: Envia um e-mail com a imagem capturada pelo SMTP(Gmail).
 - `stop_detection()`: Encerra a captura de vídeo corretamente.
 - `App`: Interface gráfica com botões para iniciar/parar a detecção.
 
