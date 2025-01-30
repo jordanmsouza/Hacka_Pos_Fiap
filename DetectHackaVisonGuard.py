@@ -11,9 +11,9 @@ from tkinter import filedialog
 import base64
 
 # Configuração do SendGrid
-SENDGRID_API_KEY = "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"  # Substitua pela sua API Key do SendGrid
+SENDGRID_API_KEY = "your secret"  # Substitua pela sua API Key do SendGrid
 EMAIL_SENDER = "securytevisionguard@gmail.com"  # Substitua pelo seu e-mail autenticado no SendGrid
-EMAIL_RECEIVER = "jordanmam29@gmail.com"  # E-mail para onde será enviado
+EMAIL_RECEIVER = "e-mail"  # E-mail para onde será enviado
 
 # Variável global para controle da execução
 running = False
