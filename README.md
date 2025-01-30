@@ -2,7 +2,7 @@
 
 ## Descrição
 
-VisionGuard é um sistema de visão computacional baseado em YOLO que detecta objetos perigosos, como facas e pistolas, em tempo real. Quando um objeto suspeito é identificado, o sistema captura uma imagem e envia uma notificação por e-mail usando a API do SendGrid.
+VisionGuard é um sistema de visão computacional baseado em YOLO que detecta objetos perigosos, como facas e pistolas, em tempo real. Quando um objeto suspeito é identificado, o sistema captura uma imagem e envia uma notificação por e-mail.
 
 ## Funcionalidades
 
