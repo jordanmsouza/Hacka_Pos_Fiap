@@ -59,6 +59,11 @@ Além disso, você precisará de uma **API Key** do SendGrid para configurar o e
 - `stop_detection()`: Encerra a captura de vídeo corretamente.
 - `App`: Interface gráfica com botões para iniciar/parar a detecção.
 
+## Acesso ao Dataset
+
+O dataset utilizado para treinamento do modelo pode ser acessado no Google Drive através do seguinte link:
+[Dataset VisionGuard](https://drive.google.com/drive/folders/13qi71kzV0WxuKdReM01d0W-EU7aWyEg6?usp=sharing)
+
 ## Contribuição
 
 Sinta-se à vontade para sugerir melhorias ou relatar problemas através de **Issues** ou **Pull Requests**.
