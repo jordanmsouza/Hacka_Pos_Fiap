@@ -16,7 +16,7 @@ VisionGuard é um sistema de visão computacional baseado em YOLO que detecta ob
 - **Python**
 - **OpenCV**
 - **YOLO** (You Only Look Once)
-- **SendGrid API** (para envio de e-mails)
+- **SMTP (Gmail)**: Protocolo para envio de e-mails.
 - **Tkinter** (interface gráfica)
 
 ## Requisitos
@@ -26,14 +26,6 @@ Antes de executar o projeto, certifique-se de ter instalado os seguintes pacotes
 ```bash
 pip install opencv-python sendgrid ultralytics tkinter
 ```
-
-Além disso, você precisará de uma **API Key** do SendGrid para configurar o envio de e-mails.
-
-## Configuração
-
-1. Crie uma conta no [SendGrid](https://sendgrid.com/).
-2. Gere uma API Key e substitua na variável `SENDGRID_API_KEY` dentro do código.
-3. Configure o e-mail do remetente (`EMAIL_SENDER`) e do destinatário (`EMAIL_RECEIVER`).
 
 ## Como Usar
 
