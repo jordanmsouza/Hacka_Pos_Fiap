@@ -1,0 +1,69 @@
+# VisionGuard - Detecção de Objetos Perigosos
+
+## Descrição
+
+VisionGuard é um sistema de visão computacional baseado em YOLO que detecta objetos perigosos, como facas e pistolas, em tempo real. Quando um objeto suspeito é identificado, o sistema captura uma imagem e envia uma notificação por e-mail usando a API do SendGrid.
+
+## Funcionalidades
+
+- Detecção de objetos cortantes e armas em tempo real
+- Suporte a câmera ao vivo e vídeos pré-gravados
+- Envio automático de alertas por e-mail com imagem anexada
+- Interface gráfica para facilitar o uso
+
+## Tecnologias Utilizadas
+
+- **Python**
+- **OpenCV**
+- **YOLO** (You Only Look Once)
+- **SendGrid API** (para envio de e-mails)
+- **Tkinter** (interface gráfica)
+
+## Requisitos
+
+Antes de executar o projeto, certifique-se de ter instalado os seguintes pacotes:
+
+```bash
+pip install opencv-python sendgrid ultralytics tkinter
+```
+
+Além disso, você precisará de uma **API Key** do SendGrid para configurar o envio de e-mails.
+
+## Configuração
+
+1. Crie uma conta no [SendGrid](https://sendgrid.com/).
+2. Gere uma API Key e substitua na variável `SENDGRID_API_KEY` dentro do código.
+3. Configure o e-mail do remetente (`EMAIL_SENDER`) e do destinatário (`EMAIL_RECEIVER`).
+
+## Como Usar
+
+### Modo Câmera
+
+1. Execute o script principal:
+   ```bash
+   python visionguard.py
+   ```
+2. Clique no botão "Câmera" para iniciar a detecção ao vivo.
+3. Pressione `q` ou `Esc` para encerrar.
+
+### Modo Vídeo
+
+1. Execute o script e clique no botão "Vídeo".
+2. Selecione um arquivo de vídeo (`.mp4`, `.avi` etc.).
+3. Aguarde a análise e o envio de alertas, se necessário.
+
+## Estrutura do Código
+
+- `detect_objects(video_source)`: Realiza a detecção de objetos em tempo real.
+- `send_email(image_path)`: Envia um e-mail com a imagem capturada pelo SendGrid.
+- `stop_detection()`: Encerra a captura de vídeo corretamente.
+- `App`: Interface gráfica com botões para iniciar/parar a detecção.
+
+## Contribuição
+
+Sinta-se à vontade para sugerir melhorias ou relatar problemas através de **Issues** ou **Pull Requests**.
+
+## Licença
+
+Este projeto está licenciado sob a **MIT License**
+
