@@ -1,48 +1,56 @@
 import os
 import cv2
 import threading
-import sendgrid
+import smtplib
 import mimetypes
-from ultralytics import YOLO
 from datetime import datetime
-from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition
+from ultralytics import YOLO
+from email.message import EmailMessage
 import tkinter as tk
 from tkinter import filedialog
-import base64
+import time
 
-# Configuração do SendGrid
-SENDGRID_API_KEY = "your secret"  # Substitua pela sua API Key do SendGrid
-EMAIL_SENDER = "securytevisionguard@gmail.com"  # Substitua pelo seu e-mail autenticado no SendGrid
-EMAIL_RECEIVER = "e-mail"  # E-mail para onde será enviado
+# Configuração do e-mail
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+EMAIL_SENDER = "securytevisionguard@gmail.com"  # Substitua pelo seu e-mail
+EMAIL_PASSWORD = "qihv lyhu ajng gncr"  # Substitua pela senha de aplicativo do Gmail
+EMAIL_RECEIVER = "jordanmam29@gmail.com"  # E-mail para onde será enviado
 
 # Variável global para controle da execução
 running = False
 cap = None  
 alert_sent = False  # Garante que o e-mail seja enviado apenas uma vez
 
-# Função para enviar o e-mail com a imagem
+# Lock para sincronizar as threads
+lock = threading.Lock()
 
+# Função para enviar o e-mail com a imagem
 def send_email(image_path):
-    sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
+    msg = EmailMessage()
+    msg["Subject"] = "⚠️ Alerta de Objeto Perigoso Detectado!"
+    msg["From"] = EMAIL_SENDER
+    msg["To"] = EMAIL_RECEIVER
+    msg.set_content("Um objeto perigoso foi detectado pela câmera. A imagem está anexada.")
+
+    # Anexar a imagem
+    ctype, encoding = mimetypes.guess_type(image_path)
+    if ctype is None or encoding is not None:
+        ctype = "application/octet-stream"
+
+    maintype, subtype = ctype.split("/", 1)
     with open(image_path, "rb") as img:
-        encoded_img = base64.b64encode(img.read()).decode()
-    
-    attachment = Attachment(
-        FileContent(encoded_img),
-        FileName(os.path.basename(image_path)),
-        FileType(mimetypes.guess_type(image_path)[0] or "application/octet-stream"),
-        Disposition("attachment")
-    )
-    
-    message = Mail(
-        from_email=EMAIL_SENDER,
-        to_emails=EMAIL_RECEIVER,
-        subject="⚠️ Alerta de Objeto Perigoso Detectado!",
-        plain_text_content="Um objeto perigoso foi detectado pela câmera. A imagem está anexada."
-    )
-    message.attachment = attachment
-    response = sg.send(message)
-    print(f"E-mail enviado para {EMAIL_RECEIVER} com status: {response.status_code}")
+        msg.add_attachment(img.read(), maintype=maintype, subtype=subtype, filename=os.path.basename(image_path))
+
+    # Enviar o e-mail
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            server.send_message(msg)
+        print(f"E-mail enviado para {EMAIL_RECEIVER} com sucesso!")
+    except Exception as e:
+        print(f"Erro ao enviar e-mail: {e}")
 
 # Função de detecção em thread separada
 def detect_objects(video_source=0):
@@ -77,15 +85,20 @@ def detect_objects(video_source=0):
                     if model.names[int(cls)] in ['pistol', 'knife'] and not alert_sent:
                         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                         image_path = os.path.join(captured_images_dir, f"suspect_{timestamp}.jpg")
-                        cv2.imwrite(image_path, frame)
-                        print(f"Imagem salva: {image_path}")
+                        
+                        # Sincronizar a gravação da imagem com o lock
+                        with lock:
+                            cv2.imwrite(image_path, frame)
+                            print(f"Imagem salva: {image_path}")
+                            
+                            # Enviar o e-mail apenas uma vez
+                            threading.Thread(target=send_email, args=(image_path,)).start()
+                            alert_sent = True  # Marca que o e-mail já foi enviado
 
-                        # Enviar o e-mail apenas uma vez
-                        send_email(image_path)
-                        alert_sent = True  # Marca que o e-mail já foi enviado
-
+        # Exibir o frame
         cv2.imshow('Detection', frame)
 
+        # Verificar se o usuário pressionou 'q' para sair
         key = cv2.waitKey(1)
         if key & 0xFF == ord('q') or key == 27:  
             running = False
