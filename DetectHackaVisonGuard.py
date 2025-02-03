@@ -7,7 +7,7 @@ from datetime import datetime
 from ultralytics import YOLO
 from email.message import EmailMessage
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 import time
 
 # Configuração do e-mail
@@ -24,6 +24,9 @@ alert_sent = False  # Garante que o e-mail seja enviado apenas uma vez
 
 # Lock para sincronizar as threads
 lock = threading.Lock()
+
+# Caminho do modelo treinado
+MODEL_PATH = "runs/detect/train/weights/best.pt"
 
 # Função para enviar o e-mail com a imagem
 def send_email(image_path):
@@ -56,7 +59,14 @@ def send_email(image_path):
 def detect_objects(video_source=0):
     global running, cap, alert_sent
     running = True  
-    model = YOLO('runs/detect/train/weights/best.pt')  
+
+    # Verifica se o modelo já foi treinado
+    if not os.path.exists(MODEL_PATH):
+        messagebox.showerror("Erro", "Modelo não treinado! Treine antes de iniciar a detecção.")
+        running = False
+        return
+
+    model = YOLO(MODEL_PATH)
     cap = cv2.VideoCapture(video_source)
 
     captured_images_dir = "captured_images"
@@ -106,6 +116,20 @@ def detect_objects(video_source=0):
 
     stop_detection()
 
+# Função para treinar o modelo
+def train_model():
+    if os.path.exists(MODEL_PATH):
+        messagebox.showinfo("Aviso", "O modelo já foi treinado! Se deseja treinar novamente, exclua 'best.pt' manualmente.")
+        return
+    
+    messagebox.showinfo("Treinamento", "Iniciando o treinamento do modelo...")
+    
+    model = YOLO('yolov8n.pt')  # Carregar modelo pré-treinado YOLOv8
+    model.train(data='C:/Users/Public/Documents/Dataset/dataset.yaml', epochs=50, imgsz=640)  # Especificar dataset e parâmetros
+    model.export(format='onnx')  # Exportar modelo para deployment
+    
+    messagebox.showinfo("Treinamento", "Treinamento concluído!")
+
 # Função para liberar recursos corretamente
 def stop_detection():
     global cap, running
@@ -120,19 +144,22 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("VisionGuard - Detecção de Objetos Cortantes")
-        self.root.geometry("400x200")
+        self.root.geometry("400x250")
 
         self.label = tk.Label(root, text="Selecione a fonte de vídeo:", font=("Arial", 14))
-        self.label.pack(pady=20)
+        self.label.pack(pady=10)
 
         self.camera_button = tk.Button(root, text="Câmera", command=self.start_camera, width=20)
-        self.camera_button.pack(pady=10)
+        self.camera_button.pack(pady=5)
 
         self.video_button = tk.Button(root, text="Vídeo", command=self.open_video, width=20)
-        self.video_button.pack(pady=10)
+        self.video_button.pack(pady=5)
+
+        self.train_button = tk.Button(root, text="Treinar Modelo", command=self.train_model, width=20, bg="green", fg="white")
+        self.train_button.pack(pady=5)
 
         self.quit_button = tk.Button(root, text="Fechar", command=self.quit_app, width=20)
-        self.quit_button.pack(pady=10)
+        self.quit_button.pack(pady=5)
 
         self.thread = None  
 
@@ -148,6 +175,9 @@ class App:
         if file_path and not running:
             self.thread = threading.Thread(target=detect_objects, args=(file_path,), daemon=True)
             self.thread.start()
+
+    def train_model(self):
+        threading.Thread(target=train_model, daemon=True).start()
 
     def quit_app(self):
         stop_detection()  # Libera câmera e janelas do OpenCV
