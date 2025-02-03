@@ -2,7 +2,7 @@
 
 ## Descrição
 
-VisionGuard é um sistema de visão computacional baseado em YOLO que detecta objetos perigosos, como facas e pistolas, em tempo real. Quando um objeto suspeito é identificado, o sistema captura uma imagem e envia uma notificação por e-mail usando a API do SendGrid.
+VisionGuard é um sistema de visão computacional baseado em YOLO que detecta objetos perigosos, como facas e pistolas, em tempo real. Quando um objeto suspeito é identificado, o sistema captura uma imagem e envia uma notificação por e-mail.
 
 ## Funcionalidades
 
@@ -16,7 +16,7 @@ VisionGuard é um sistema de visão computacional baseado em YOLO que detecta ob
 - **Python**
 - **OpenCV**
 - **YOLO** (You Only Look Once)
-- **SendGrid API** (para envio de e-mails)
+- **SMTP (Gmail)**: Protocolo para envio de e-mails.
 - **Tkinter** (interface gráfica)
 
 ## Requisitos
@@ -24,16 +24,8 @@ VisionGuard é um sistema de visão computacional baseado em YOLO que detecta ob
 Antes de executar o projeto, certifique-se de ter instalado os seguintes pacotes:
 
 ```bash
-pip install opencv-python sendgrid ultralytics tkinter
+pip install opencv-python ultralytics tkinter
 ```
-
-Além disso, você precisará de uma **API Key** do SendGrid para configurar o envio de e-mails.
-
-## Configuração
-
-1. Crie uma conta no [SendGrid](https://sendgrid.com/).
-2. Gere uma API Key e substitua na variável `SENDGRID_API_KEY` dentro do código.
-3. Configure o e-mail do remetente (`EMAIL_SENDER`) e do destinatário (`EMAIL_RECEIVER`).
 
 ## Como Usar
 
@@ -44,7 +36,7 @@ Além disso, você precisará de uma **API Key** do SendGrid para configurar o e
    python visionguard.py
    ```
 2. Clique no botão "Câmera" para iniciar a detecção ao vivo.
-3. Pressione `q` ou `Esc` para encerrar.
+3. Pressione `fechar` para encerrar.
 
 ### Modo Vídeo
 
@@ -55,7 +47,7 @@ Além disso, você precisará de uma **API Key** do SendGrid para configurar o e
 ## Estrutura do Código
 
 - `detect_objects(video_source)`: Realiza a detecção de objetos em tempo real.
-- `send_email(image_path)`: Envia um e-mail com a imagem capturada pelo SendGrid.
+- `send_email(image_path)`: Envia um e-mail com a imagem capturada pelo SMTP(Gmail).
 - `stop_detection()`: Encerra a captura de vídeo corretamente.
 - `App`: Interface gráfica com botões para iniciar/parar a detecção.
 
