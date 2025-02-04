@@ -62,5 +62,5 @@ Sinta-se à vontade para sugerir melhorias ou relatar problemas através de **Is
 
 ## Licença
 
-Este projeto está licenciado sob a **Apache 2.0 License**
+Este projeto está licenciado sob o **Apache 2.0 License**
 
