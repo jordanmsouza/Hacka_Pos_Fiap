@@ -8,7 +8,6 @@ from ultralytics import YOLO
 from email.message import EmailMessage
 import tkinter as tk
 from tkinter import filedialog
-import time
 
 # Configuração do e-mail
 SMTP_SERVER = "smtp.gmail.com"
