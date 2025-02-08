@@ -65,9 +65,9 @@ Além disso, o sistema oferece uma interface gráfica (GUI) desenvolvida em `Tki
 
 Antes de executar o projeto, certifique-se de ter instalado os seguintes pacotes:
 
-```bash```
+```bash
 pip install opencv-python ultralytics tkinter Pillow face_recognition
-
+```
 ---
 
 ## **Como Utilizar**
