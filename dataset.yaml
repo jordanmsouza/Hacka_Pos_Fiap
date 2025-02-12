@@ -1,0 +1,8 @@
+train: /content/drive/MyDrive/HackaFiap/Dataset/NovoDataset/images/train
+val: /content/drive/MyDrive/HackaFiap/Dataset/NovoDataset/images/test
+
+# number of classes
+nc: 5
+
+# class names
+names: ['knife', 'pistol', 'fork', 'spoon','person']
