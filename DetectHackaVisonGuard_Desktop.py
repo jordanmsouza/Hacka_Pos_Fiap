@@ -181,6 +181,7 @@ def detect_objects(video_source=0):
         # Verifica se a janela foi fechada pelo usuário
         if cv2.getWindowProperty('Detection', cv2.WND_PROP_VISIBLE) < 1:
             print("Janela 'Detection' fechada pelo usuário.")
+            print("preparando envio de e-mail...")
             running = False
             break
 
