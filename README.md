@@ -83,10 +83,11 @@ pip install opencv-python ultralytics tkinter
 
 ---
 
-## Acesso ao Dataset
+## Acesso ao Dataset e ao video explicativo do projeto
 
 O dataset utilizado para treinamento do modelo pode ser acessado no Google Drive através do seguinte link:
-[Dataset VisionGuard](https://drive.google.com/drive/folders/13qi71kzV0WxuKdReM01d0W-EU7aWyEg6?usp=sharing)
+[Dataset VisionGuard](https://drive.google.com/drive/folders/13qi71kzV0WxuKdReM01d0W-EU7aWyEg6?usp=sharing) e
+[Video Explicativo Youtube](https://youtu.be/-ptQVMex2xI?si=19KDhoERRBA259it)
 
 ---
 
