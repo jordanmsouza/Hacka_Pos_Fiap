@@ -2,7 +2,7 @@
 # **VisionGuard - Sistema de Monitoramento Inteligente**
 
 ## **Descrição Geral**
-O **VisionGuard** é um sistema de monitoramento baseado em visão computacional, projetado para detectar objetos cortantes (como facas e armas) e enviar alertas em tempo real via e-mail. Utilizando o modelo YOLO para a detecção, o sistema visa garantir segurança de maneira proativa e automatizada.
+O **VisionGuard** é um sistema de monitoramento baseado em visão computacional, projetado para detectar objetos cortantes (como facas, tesouras e estiletes) e enviar alertas em tempo real via e-mail. Utilizando o modelo YOLO para a detecção, o sistema visa garantir segurança de maneira proativa e automatizada.
 
 Além disso, o sistema oferece uma interface gráfica (GUI) desenvolvida em `Tkinter`, facilitando o uso tanto para monitoramento em tempo real quanto para análise de vídeos gravados.
 
@@ -67,7 +67,7 @@ pip install opencv-python ultralytics tkinter
 ---
 
 ## **Como Utilizar**
-1. Execute o código em Python (`python visionguard.py`).
+1. Execute o código em Python (`python DetectHackaVisonGuard_Desktop.py`).
 2. Utilize a interface para:
    - Iniciar a câmera ao vivo para monitoramento em tempo real.
    - Abrir um vídeo gravado para análise posterior.
@@ -80,6 +80,13 @@ pip install opencv-python ultralytics tkinter
 ## **Observações**
 - O modelo YOLO utilizado está localizado no caminho `runs/detect/train/weights/best.pt`. Certifique-se de que ele está disponível para uso.
 - As detecções válidas para envio de alerta incluem **facas** e **armas**.
+
+---
+
+## Acesso ao Dataset
+
+O dataset utilizado para treinamento do modelo pode ser acessado no Google Drive através do seguinte link:
+[Dataset VisionGuard](https://drive.google.com/drive/folders/13qi71kzV0WxuKdReM01d0W-EU7aWyEg6?usp=sharing)
 
 ---
 
