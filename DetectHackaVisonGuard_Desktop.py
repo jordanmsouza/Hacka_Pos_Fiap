@@ -117,7 +117,7 @@ def detect_objects(video_source=0):
                     x1, y1, x2, y2 = box.xyxy[0].numpy()
                     confidence = box.conf[0]
                     cls = box.cls[0]
-                    if confidence > 0.6:
+                    if confidence > 0.5:
                         label_text = f"{model.names[int(cls)]} {confidence:.2f}"
                         cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
                         cv2.putText(frame, label_text, (int(x1), int(y1) - 10),
@@ -181,12 +181,12 @@ def detect_objects(video_source=0):
         # Verifica se a janela foi fechada pelo usuário
         if cv2.getWindowProperty('Detection', cv2.WND_PROP_VISIBLE) < 1:
             print("Janela 'Detection' fechada pelo usuário.")
-            print("preparando envio de e-mail...")
             running = False
             break
 
     # No modo vídeo, se houver detecções, envia o e-mail com todas as imagens coletadas
     if is_video and valid_detections and alert_images:
+        print("Preparando envio de e-mail...")
         send_email_video_alert(valid_detections, alert_images)
     else:
         if is_video:
